@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>Chinese Restaurant</title>
+
+    <style>
+      
+
+      #naslov{
+        padding-top: 10px;
+      }
+
+      .footer{
+        padding-top:10px;
+        padding-bottom: 5px;
+        background-color: #250000;
+        color: whitesmoke;
+      }
+
+      .navbar{
+        background-color: #250000;
+        color:#DF6B14 !important; 
+        
+      }
+
+      .nav-link{
+        color:#C21403!important; 
+      }
+
+      #content{
+        background-color: #750300;
+        color:whitesmoke;
+        padding-bottom: 10px;
+      }
+
+      #banner{
+        background-color:#750300 ;
+      }
+
+      #logo img{
+        width: 100px;
+        height: 100px;
+      }
+
+      #mapa iframe{
+        border: 4px solid #250000;
+      }
+
+      #glavni-navbar  .active{
+             color: #DF6B14!important; 
+      }
+
+      #opis{
+        text-align: center;
+      }
+
+      #logo{
+          width: 100px;
+          height: 100px;
+      }
+
+      body{
+          background-color: lightgray;
+      }
+
+      #naslov{
+
+          text-align: center;
+
+      }
+
+      #kontakt{
+          text-align: center;
+          padding-bottom: 20px;
+      }
+
+      #mapa{
+          text-align: center;
+          
+      }
+      
+      #opis{
+          margin-top: 20px;
+      }
+
+      #nagrade{
+        margin-top: 20px;
+      }
+
+
+     
+    </style>
+</head>
+<body>
+  <div class="row no-gutters">
+        
+    <div class="col-12">
+      <nav class="navbar navbar-expand-sm navbar-light navbar-static-top " id="glavni-navbar" style="padding: 0; text-align: right; width:100%;" >
+        <a class="navbar-brand" href="#" style="padding: 0;">
+          <img src="../Images/logo.jpeg" width="80" height="80" alt="" >
+        </a>
+        
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Pocetna</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="galerija.html">Galerija</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="jelovnik.html">Jelovnik</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="moj_nalog.html">Moj nalog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="about.html">O nama</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../EN/about.html">Promeni jezik</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+     
+  </div>
+ 
+  <div class="row no-gutters" id = "content">
+      <div class="col-md-3 col-0"></div>
+
+      <div class="col-md-6 col-12 text-center"  >
+          <h1 id="naslov">O nama</h1>
+          <p id="opis">Doživite pravu kinesku kulinarsku avanturu na našem sajtu o kineskom restoranu! Istražite autentične ukuse Kine kroz našu raznovrsnu ponudu jela, obogaćenu tradicionalnim receptima i modernim interpretacijama. Saznajte više o bogatoj kulturi i gastronomiji Kine uz nas. Dobrodošli da otkrijete svet kineske kuhinje, prilagođen vašim ukusima!</p>
+
+          <hr>
+          <div >
+            <h4>Nagrade</h4>
+            <div class="row d-flex" id="nagrade" style="align-items: center;">
+              <div class="col-4">
+                <img class="img-fluid" src="../Images/nagrada1.png" width="200" alt="">
+              </div>
+              <div class="col-4">
+                <img class="img-fluid" src="../Images/nagrada2.png" width="200" alt="">
+              </div>
+              <div class="col-4">
+                <img class="img-fluid" src="../Images/nagrada3.png" width="150" alt="">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div id="mapa">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1891.0923663238586!2d20.47704320830792!3d44.80524259345148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a7a9f5ee145d3%3A0x3ed89b5bb505d83!2z0JXQu9C10LrRgtGA0L7RgtC10YXQvdC40YfQutC4INGE0LDQutGD0LvRgtC10YIg0KPQvdC40LLQtdGA0LfQuNGC0LXRgtCwINGDINCR0LXQvtCz0YDQsNC00YM!5e0!3m2!1ssr!2srs!4v1719619185232!5m2!1ssr!2srs" width="600" height="450"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" ></iframe>
+          </div>
+          <hr>
+          <div id="kontakt">
+            <h4>Kontakt</h4>
+             <span>Telefon: 066/666-666666</span> 
+          </div>
+
+         
+
+          <hr>
+          <div >
+            <h4>Znacajni sajtovi</h4>
+            <div class="row d-flex" id="nagrade" style="align-items: center;">
+              <div class="col-4">
+                <a href="https://www.etf.bg.ac.rs/">
+                  <img class="img-fluid" src="../Images/etf_logo.png" width="100" alt="">
+                </a>
+              </div>
+              <div class="col-4">
+                <a href="https://www.bg.ac.rs/">
+                  <img class="img-fluid" src="../Images/bu_logo.png" width="200" alt="">
+                </a>
+                
+              </div>
+
+              <div class="col-4">
+                <a href="https://www.etf.bg.ac.rs/">
+                  <img class="img-fluid" src="../Images/etf_logo.png" width="100" alt="">
+                </a>
+              </div>
+             
+            </div>
+          </div>
+          
+      </div>
+
+      <div class="col-md-3 col-0"></div>
+  </div>
+
+  <div class="row no-gutters">
+    <div class="col-12">
+      <footer class="footer text-center">
+        
+            <p>&copy; 2024, Vanja Vasiljević, Igor Vićentijević, Odsek za softversko inženjerstvo Elektrotehničkog fakulteta Univerziteta u Beogradu</p>
+       
+    </footer>
+    </div>
+  </div>
+  
+  </div>
+
+    
+
+
+   
+</body>
+
+
+</html>

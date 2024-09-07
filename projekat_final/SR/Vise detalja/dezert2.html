@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Restaurant</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <style>
+        .container-fluid{
+            padding: 0;
+            margin: 0;
+        }
+        #opis{
+            padding: 10px;
+        }
+
+        #content{
+            margin-top: 0;
+            min-height: 78vh;
+            height: 100%;
+            color: whitesmoke;
+            background-color: #750300;
+        }
+
+        #slika{
+            text-align: center;
+        }
+
+        #odabir{
+            height: 100%;
+            background-color: #250000;
+        }
+
+        #odabir .nav-link{
+            color:#C21403!important; 
+        }
+
+        #odabir  .active{
+            color: #DF6B14!important; 
+        }
+
+        #opis{
+            padding-top: 20px;
+        }
+
+        .footer{
+            padding-top: 5px;
+            
+            padding-bottom: 1px;
+              background-color: #250000;
+              color: whitesmoke;
+        }
+
+        
+        #slika img{
+            height: 50vh;
+            padding-top: 20px;
+        }
+
+        #glavni-navbar{     
+            background-color: #250000;
+            color:#DF6B14 !important;  
+        }
+
+        #glavni-navbar .nav-link{
+            color:#C21403!important; 
+        }
+
+        #glavni-navbar  .active{
+            color: #DF6B14!important; 
+        }
+
+        #glavni-navbar nav{
+            border-radius: 0;
+        }
+        #logo img{
+            width: 100px;
+            height: 100px;
+        }
+
+        #banner{
+            background-color:#750300;
+        }
+                  
+        nav{
+            width: 100%;
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: "|"; 
+            color: whitesmoke;
+        }
+
+        .breadcrumb{
+            margin-bottom: 0;
+            /*background-color:#750300;*/
+            background-color: #510D0D;
+            
+            
+        }
+
+        #active{
+            color: #DF6B14;
+        }
+
+        #naslov{
+            padding-top: 10px;
+        }
+
+        .breadcrumb a{
+            color: #C21403  ;
+        }
+
+        #cena{
+            margin-top : 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #cena td{
+            padding: 0 20px;
+        }
+
+        #opis{
+            padding-top: 20px;
+            background-color: #250000;
+            margin-top: 20px;
+        }
+        .btn-custom{
+            background-color: #510D0D;
+            color: whitesmoke;
+            
+            
+        }
+        
+       
+
+        
+    </style>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../../Data/cene.js">
+
+    </script>
+    <script>
+       
+        $(document).ready(function(){
+            let prethodni = localStorage.getItem("prethodno");
+
+            let ime = "";
+            ime+=prethodni[0].toUpperCase();
+            for(let i = 1; i < prethodni.length; i++){
+                ime+=prethodni[i];
+            }
+
+            if(prethodni != "jelovnik"){
+               
+                let str = '<li class="breadcrumb-item"><a href="../' + prethodni +'.html">'+ime+'</a></li>'
+                
+                $(".ubaci_pre").before(str);
+            }
+
+            AzurirajCene();
+
+            function AzurirajCene(){
+                let mojeIme = $("#naslov h1").text();
+                let trenutni = cene.find(cena => cena.ime == mojeIme)
+                
+                $("#cena #velika").text(trenutni.velikaPorcija)
+                $("#cena #mala").text(trenutni.malaPorcija)
+
+            }
+
+            let kolicina=1;
+
+            $("#kolicina").text(kolicina);
+
+            $("#umanji").on("click",function(){
+                if(kolicina>1)kolicina--;
+                $("#kolicina").text(kolicina);
+            });
+
+            $("#uvecaj").on("click",function(){
+                kolicina++;
+                $("#kolicina").text(kolicina);
+            });
+
+            $("#poruci").on("click",function(){
+                let korpa = [];
+
+                if(localStorage.getItem("korpa")!=null)
+                    korpa=JSON.parse(localStorage.getItem("korpa"));
+
+                let uKorpi=korpa.find(function(elem){
+                        return elem.ime==$("#naslov h1").text() && elem.porcija==$("#porcija").val()
+                    });
+                if(uKorpi==undefined)
+                    korpa.push(
+                        {
+                            ime:$("#naslov h1").text(),
+                            porcija:$("#porcija").val(),
+                            kolicina:kolicina
+                        }
+                    )
+                else {
+                    uKorpi.kolicina+=kolicina;
+                    let id=korpa.indexOf(uKorpi);
+                    korpa[id]=uKorpi;
+                }
+                localStorage.setItem("korpa",JSON.stringify(korpa));
+                $("#poruka").text("Uspesno poruceno - " + $("#ime").text() + ", " + kolicina + ", " + $("#porcija").val() + " porcija")
+            });
+        })
+        
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+        
+            <div class="col-12">
+              <nav class="navbar navbar-expand-sm navbar-light navbar-static-top" id="glavni-navbar" style="padding: 0; text-align: right; width:100%;" >
+                <a class="navbar-brand" href="#" style="padding: 0;">
+                  <img src="../../Images/logo.jpeg" width="80" height="80" alt="" >
+                </a>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Pocetna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="../galerija.html">Galerija</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../jelovnik.html">Jelovnik</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../moj_nalog.html">Moj nalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about.html">O nama</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../EN/Vise detalja/dezert2.html">Promeni jezik</a>
+                    </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        <div class="row">
+            <div class="col-12">
+                <nav  aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="../index.html">Pocetna</a></li>
+                      <li class="breadcrumb-item"><a href="../jelovnik.html">Jelovnik</a></li>
+                     
+                      
+                      <li class="breadcrumb-item active ubaci_pre" aria-current="page" id="active">Ananas sa slagom i prelivom od sumskog voca</li>
+                    </ol>
+                </nav>
+
+            </div>
+        </div>
+
+        <div class="row no-gutters">
+            <div class="col-md-2">
+                <nav class="navbar flex-column  navbar-light " id="odabir">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../predjela.html">Predjela</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="../glavna_jela.html">Glavna jela</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../dezerti.html">Dezerti</a>
+                        </li>
+                    </ul>
+                </nav>
+
+             </div>
+                <div class="col-md-10">
+                    <div id="content">
+                        <div id="naslov">
+                            <h1 id="ime" style="text-align: center;">Ananas sa slagom i prelivom od sumskog voca</h1>
+                        </div>
+                       
+                        <div id="opis">
+                            <p>Ananas sa slagom i prelivom od šumskog voća je osvežavajuća poslastica koja spaja sočnost ananasa sa kremastim slojem slaga, obogaćenim voćnim prelivom od šumskog voća. Sveži ananas se obično servira isečen na kriške ili kockice, preliven bogatim slojem slaga koji pruža kremastu teksturu, dok se preliv od šumskog voća ističe svojim intenzivnim voćnim ukusom, često obogaćenim voćnim komadićima ili komadićima bobičastog voća. Ova kombinacija pruža savršenu ravnotežu slatkog, kiselkastog i kremastog, čineći je savršenim završetkom obroka ili osvežavajućim međuobrokom.</p>
+                        </div>
+
+                        <div id="slika">
+                            <img src="../../Images/Dezerti/Ananas sa slagom i prelivom od sumskog voca/ananasSaSlagom.jpg" alt="svinjetina">
+                        </div>  
+
+                        <div id="cena">
+                            <table >
+                                <tr>
+                                    <td>Velika porcija</td>
+                                    <td>Mala porcija</td>
+                                </tr>
+                                <tr>
+                                    <td id="velika">500</td>
+                                    <td id="mala"> 350</td>
+                                </tr>
+                            </table>
+                            
+                       </div>
+
+                       <hr>
+
+                       <div id="porudzbina" class="text-center">
+                            <button id="umanji" class="btn btn-custom">-</button>
+                            <span id="kolicina"></span>
+                            <button id="uvecaj" class="btn btn-custom">+</button>
+
+                            <br>
+                            <br>
+
+                            <span>Porcija: &nbsp; &nbsp; </span>
+                            <select name="porcija" id="porcija">
+                                <option value="mala" selected>Mala</option>
+                                <option value="velika">Velika</option>
+                            </select>
+                            <br>
+                            <br>
+                            <button id="poruci" class="btn btn-custom" style="margin-bottom: 20px;">Poruči</button>
+                            <br>
+                            <p id="poruka"></p>
+                    </div> 
+
+                    </div>
+                
+
+                    
+                    
+                </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <footer class="footer text-center">
+                    <p>&copy; 2024, Vanja Vasiljević, Igor Vićentijević, Odsek za softversko inženjerstvo Elektrotehničkog fakulteta Univerziteta u Beogradu</p>
+              
+            </footer>
+            </div>
+        </div>
+
+    </div>
+    
+
+    
+
+    
+</body>
+
+</html>

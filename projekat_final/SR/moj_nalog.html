@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Restaurant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+       
+
+        .red{
+            padding:15px;
+            
+        }
+
+        #prviRed{
+            padding-top: 0px;
+        }
+
+        .container-fluid{
+            padding: 0;
+            margin: 0;
+        }
+        #opis{
+            padding: 10px;
+        }
+
+        #content{
+            margin-top: 0;
+            min-height: 74vh;
+            color: whitesmoke;
+            background-color: #750300;
+            text-align: center;
+            
+        }
+
+        #slika{
+            text-align: center;
+        }
+
+        
+
+        #odabir nav{
+            height: 100%;
+            background-color: #250000;
+           
+        }
+
+        #odabir .nav-link{
+            color:#C21403!important; 
+        }
+
+        #odabir  .active{
+            color: #DF6B14!important; 
+        }
+
+        #opis{
+            padding-top: 20px;
+        }
+
+        .footer{
+            padding-top: 5px;
+            
+            padding-bottom: 1px;
+              background-color: #250000;
+              color: whitesmoke;
+        }
+
+        
+        #slika img{
+            height: 50vh;
+            padding-top: 20px;
+        }
+
+        #glavni-navbar{     
+            background-color: #250000;
+            color:#DF6B14 !important;  
+        }
+
+        #glavni-navbar .nav-link{
+            color:#C21403!important; 
+        }
+
+        #glavni-navbar  .active{
+            color: #DF6B14!important; 
+        }
+
+        #glavni-navbar nav{
+            border-radius: 0;
+        }
+        #logo img{
+            width: 100px;
+            height: 100px;
+        }
+
+        #banner{
+            background-color:#750300;
+        }
+                  
+        nav{
+            width: 100%;
+        }
+
+        .breadcrumb-item+.breadcrumb-item::before {
+            content: "|"; 
+            color: whitesmoke;
+        }
+
+        .breadcrumb{
+            margin-bottom: 0;
+            /*background-color:#750300;*/
+            background-color: #510D0D;
+            
+            
+        }
+
+        #active{
+            color: #DF6B14;
+        }
+
+        #naslov{
+            padding-top: 10px;
+        }
+
+        .breadcrumb a{
+            color: #C21403  ;
+        }
+
+        #kartice{
+            padding: 20px;
+            
+        }
+
+        .btn-custom{
+            background-color: #510D0D;
+            color: whitesmoke;                        
+        }
+
+        .card-content {
+            height: 80%;
+            margin-bottom: 5px;
+        }
+
+
+        .card{
+            color:#C21403;
+        }
+
+        .hidden{
+            display: none;
+        }
+
+        .btn-custom{
+            background-color: #510D0D;
+            color: whitesmoke;
+            
+            
+        }
+
+        
+
+        #korpa td, tr{
+            padding:10px;
+        }
+
+        .narudzbina-sadrzaj{
+            display: flex;
+            justify-content: center;
+        }
+
+       td{
+            padding:20px;
+        }
+        tr{
+            padding: 5px;
+        }
+
+        .table{
+            color: whitesmoke;
+        }
+
+        .button-group{
+            display: inline-flex;
+            align-items: center;
+        }
+
+       
+
+        
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <script src="../Data/cene.js"></script>
+
+    <script>
+        $(document).ready(function(){               
+            let korpa=JSON.parse(localStorage.getItem("korpa"));
+            let cenovnik=cene;
+            let lista = [];
+            
+            if(localStorage.getItem("lista") != null)
+                 lista=JSON.parse(localStorage.getItem("lista"));
+            
+            generisiKorpu();
+            generisiListu();
+
+            function getCena(i){
+                let cena=korpa[i].kolicina;
+                let x=cenovnik.find(function(elem){
+                        return elem.ime==korpa[i].ime
+                    });
+                if(korpa[i].porcija=="mala")cena*=x.malaPorcija;
+                else cena*=x.velikaPorcija;
+                return cena;
+            }
+            
+            
+            
+            function generisiKolicinu(i){
+                let html= "";
+                html+="<span class='button-group'>"
+                html+=  "<button class='btn btn-custom' id='umanji" + i + "'>-</button>"
+                html+=      "<span id='kolicina" + i + "'>" +"&nbsp;&nbsp;"+ korpa[i].kolicina +"&nbsp;&nbsp;"+ "</span>"
+                html+=      "<button class='btn btn-custom' id='uvecaj" + i + "'>+</button>"
+
+                html+="</span>"
+
+                $("#korpa").on("click","#umanji" + i,function(){                    
+                    let old=-1*getCena(i);
+                    if(korpa[i].kolicina>1)korpa[i].kolicina--;
+                    $("#kolicina"+ i).html("&nbsp;&nbsp;"+korpa[i].kolicina+"&nbsp;&nbsp;");
+                    $("#cena"+i).text(getCena(i));
+                    old+=getCena(i)+Number($("#ukupno").text());
+                    $("#ukupno").text(old)
+                    localStorage.setItem("korpa",JSON.stringify(korpa));
+                });
+
+                $("#korpa").on("click","#uvecaj" + i,function(){
+                    let old=-1*getCena(i);
+                    korpa[i].kolicina++;
+                    $("#kolicina"+ i).html("&nbsp;&nbsp;"+korpa[i].kolicina+"&nbsp;&nbsp;");
+                    $("#cena"+i).text(getCena(i));
+                    old+=getCena(i)+Number($("#ukupno").text());
+                    $("#ukupno").text(old)
+                    localStorage.setItem("korpa",JSON.stringify(korpa));
+                });
+                return html;
+            }
+
+            function generisiKorpu(){
+                $("#korpa").unbind();
+                let htmlGlobal="<tr><th>Proizvod</th><th>Porcija</th><th>Kolicina</th><th>Cena</th><th></th></tr>";
+                let ukupno=0;
+                for(let i=0;i<korpa.length;i++){
+                    if(korpa[i].ime=="")continue;
+                    let html="<tr>";
+                    html+="<td id='proizvod"+ i + "'>" + korpa[i].ime + "</td>";
+                    html+="<td id='porcija"+ i + "'>" + korpa[i].porcija + "</td>";
+                    html+="<td>" + generisiKolicinu(i) + "</td>";
+                    html+="<td id='cena"+ i + "'>" + getCena(i) + "</td>";
+                    html+="<td>" + "<button class='btn btn-custom' id='obrisi"+ i + "'>Obrisi</button></td>";
+                    html+="</tr>"
+                    htmlGlobal+=html;
+                    ukupno+=getCena(i);
+                    $("#korpa").on("click","#obrisi" + i,function(){
+                        korpa.splice(i,1);
+                        localStorage.setItem("korpa",JSON.stringify(korpa));
+                        generisiKorpu();
+                    });
+                }
+                let html="<tr>";
+                html+="<td colspan='2'></td>";
+                html+="<td>Ukupno</td>";
+                html+="<td id='ukupno'>"+ukupno+"</td>";
+                html+="<td><button class='btn btn-custom' id='finalizuj'>Finalizuj</button></td>"
+                html+="</tr>";
+                htmlGlobal+=html;
+
+                $("#korpa").on("click","#finalizuj",function(){    
+                    if(korpa.length==0)return;                
+                    lista.push(korpa);
+                    korpa=[];
+                    localStorage.setItem("lista",JSON.stringify(lista));
+                    localStorage.setItem("korpa",JSON.stringify(korpa));
+                    generisiKorpu();
+                    generisiListu();
+                });
+                $("#korpa").html(htmlGlobal);
+            }
+        
+            
+            function generisiElementListe(j){
+                let id=j+1;
+                let htmlGlobal = "";
+                
+                 htmlGlobal+="<div class='text-center'><h2 style='text-align:center'>Narudzbina #" + id + "</h2></div>";
+                 
+                htmlGlobal+="<div class='narudzbina-sadrzaj'>"
+                htmlGlobal+="<table class='table'><tr><th>Proizvod</th><th>Porcija</th><th>Kolicina</th><th>Cena</th></tr>";
+                let ukupno=0;
+                for(let i=0;i<lista[j].length;i++){
+                    if(lista[j][i].ime=="")continue;
+                    let cena=lista[j][i].kolicina;
+                    let x=cenovnik.find(function(elem){
+                            return elem.ime==lista[j][i].ime
+                        });
+                    if(lista[j][i].porcija=="mala")cena*=x.malaPorcija;
+                    else cena*=x.velikaPorcija;
+                    let html="<tr>";
+                    html+="<td id='proizvod"+ i + "'>" + lista[j][i].ime + "</td>";
+                    html+="<td id='porcija"+ i + "'>" + lista[j][i].porcija + "</td>";
+                    html+="<td>" + lista[j][i].kolicina + "</td>";
+                    html+="<td id='cena"+ i + "'>" + cena + "</td>";
+                    html+="</tr>"
+                    htmlGlobal+=html;
+                    ukupno+=cena;
+                }
+                let html="<tr>";
+                html+="<td colspan='2'></td>";
+                html+="<td>Ukupno</td>";
+                html+="<td id='ukupno'>"+ukupno+"</td>";
+                html+="</tr></table>";
+                html+="</div>"
+                htmlGlobal+=html;
+                $("#narudzbine").append(htmlGlobal);
+            }
+            
+            function generisiListu(){
+                $("#narudzbine").html("");
+                console.log(lista)
+                for(let i=0;i<lista.length;i++){
+                    generisiElementListe(i);
+                }
+            }
+        })
+    </script>
+</head>
+
+<body>
+
+
+    <div class="container-fluid px-0" id="content">
+
+        <div class="row no-gutters">
+        
+            <div class="col-12">
+              <nav class="navbar navbar-expand-sm navbar-light navbar-static-top" id="glavni-navbar" style="padding: 0; text-align: right; width:100%;" >
+                <a class="navbar-brand" href="#" style="padding: 0;">
+                  <img src="../Images/logo.jpeg" width="80" height="80" alt="" >
+                </a>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Pocetna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="galerija.html">Galerija</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="jelovnik.html">Jelovnik</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="moj_nalog.html">Moj nalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">O nama</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../EN/moj_nalog.html">Promeni jezik</a>
+                    </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        <div class="row no-gutters">
+            <div class="col-12">
+                <nav  aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a href="index.html">Pocetna</a></li>
+                      <li class="breadcrumb-item active" aria-current="page" id="active">Moj Nalog</li>
+                    </ol>
+                </nav>
+
+            </div>
+        </div>
+
+        
+
+        <div class="row no-gutters">
+            <div class="col-12">
+                <div id="content">
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-0"></div>
+                            <div class="col-md-6 col-sm-12">
+                                <h1 style="text-align: center; margin: 20px;">Korpa</h1>
+                                <div style="display: flex; justify-content: center;">
+                                    <table class="table" id="korpa">                    
+                                    </table>
+                                </div>   
+                            </div>
+                            <div class="col-md-3 col-sm-0"></div>
+                    </div>
+                    
+                        
+                    
+                    <hr>
+                    <h1 style="text-align: center; margin-bottom: 20px;">Lista narudzbina</h1>  
+                    <div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div id="narudzbine"></div>        
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                       
+                    </div> 
+                    
+                   
+                    
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <div class="row no-gutters">
+        <div class="col-12">
+            <footer class="footer text-center">
+                <p>&copy; 2024, Vanja Vasiljević, Igor Vićentijević, Odsek za softversko inženjerstvo Elektrotehničkog fakulteta Univerziteta u Beogradu</p>
+            </footer>
+        </div>
+    </div>
+    
+</body>
+
+</html>
