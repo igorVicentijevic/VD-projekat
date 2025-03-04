@@ -1,1 +1,1 @@
-Vebsajt za kineski restoran
+Website for Chinese restaurant
